@@ -191,9 +191,9 @@ Start from docker config
 
     cp /opt/docker-cartodb/config/app_config.yml .
 
-Logs dir must be exist+ writeable
+Logs and uploads dir must be exist+ writeable
 
-    mkdir /opt/cartodb/log; chown cartodb /opt/cartodb/log
+    mkdir /opt/cartodb/log /opt/cartodb/public/uploads; chown cartodb /opt/cartodb/log /opt/cartodb/public/uploads
 
 Change domain from cartodb.localhost to server name
 
