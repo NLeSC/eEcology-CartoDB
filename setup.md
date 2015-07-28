@@ -327,6 +327,7 @@ Setup config by disabling default and adding the one from docker
     service nginx restart
 
 Instead of ssl force production to work with http instead of https by making some changes to the code
+
     diff --git a/app/controllers/application_controller.rb b/app/controllers/application_controller.rb
     index 7eaed07..b721c4c 100644
     --- a/app/controllers/application_controller.rb
@@ -419,3 +420,5 @@ Make sure user@db.e-ecology.sara.nl can connect without password
     psql -U cartodb $ORGANIZATION_DB < import.psql
 
 # Create wiki page with usage instructions
+
+Page created at https://public.e-cology.sara.nl/wiki/index.php/CartoDB
