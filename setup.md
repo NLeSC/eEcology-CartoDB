@@ -62,8 +62,6 @@ To start we need a vm with an OS installed on it.
   * Select tempate = cartodb
   * Deploy # = 1
 
-To speed up installation the data disk was excluded from the template and a SSD node is used.
-
 # Perform installation of cartodb
 
 There was an old vm also called cartodb the hostname is still in cache, so use ip to ssh to it.
@@ -106,6 +104,14 @@ Allow mail to send from server, use `Internet site` as config option
 
     apt-get install postfix mailutils
 
+Mount the pg data disk
+
+    sfdisk /dev/vdb
+    mkfs.ext4 /dev/vdb1
+		mkdir /data
+		echo '/dev/vdb1 /data ext4 defaults 0 2' >> /etc/fstab
+		mount -a
+
 ## Run docker steps
 
 The steps in the Dockerfile where mostly followed, below are changes/extras.
@@ -129,6 +135,13 @@ Instead of Ruby via rvm we do a configure/make/make install, so we don’t need 
     autoconf;./configure;make; make install
 
 Ran ` pg_createcluster 9.3 main --start` to generate postgresql cluster config files.
+
+Move pg_data to own partition
+
+    service postgresql stop
+    mv /var/lib/postgresql/9.3/main /data/pg_data
+    perl -pi -e 's@/var/lib/postgresql/9.3/main@/data/pg_data@' /etc/postgresql/9.3/main/postgresql.conf
+		service postgresql start
 
 The cartodb repos/services are installed in /opt, instead of root so it is cleaner
 
@@ -282,7 +295,7 @@ Start rails
 Capture errors in rollbar.
 
 1. Created account on https://rollbar.com
-2. Add post_server_item token to config/app_config.yml
+2. Add post_server_item token to config/app_config.yml as `rollbar_api_key` key.
 
 Capture statistics with statsd
 
