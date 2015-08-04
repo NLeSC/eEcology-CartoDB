@@ -330,6 +330,10 @@ Statsd upstart script (/etc/init/statsd.conf):
 
 Set hostname and port in config/app_conf.yml:graphite_public to localhost and 8125 resp.
 
+Set from adres of sent organization emails to me
+
+    perl -pi -e 's/cartodb\.com \<support\@cartodb\.com\>/cartodb admin <s.verhoeven\@esciencecenter.nl>/' /opt/cartodb/app/mailers/*.rb
+
 # Setup nginx
 
 Using nginx as reverse proxy for cartodb frontend + sql api service + windshaft tiling service.
