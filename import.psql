@@ -5,3 +5,7 @@ SET statement_timeout=0;
 \copy gps.ee_tracker_limited (device_info_serial , firmware_version , mass , start_date , end_date , x_o , x_s , y_o , y_s , z_o , z_s , tracker_id) FROM 'ee_tracker_limited.csv'
 \copy gps.ee_track_session_limited (key_name , device_info_serial , ring_number , start_date , end_date , start_latitude , start_longitude , remarks , track_session_id , project_id , tracker_id , individual_id) FROM 'ee_track_session_limited.csv'
 \copy gps.ee_tracking_speed_limited (the_geom, the_geom_webmercator , device_info_serial , date_time , latitude , longitude , altitude , pressure , temperature , satellites_used , gps_fixtime , positiondop , h_accuracy , v_accuracy , x_speed , y_speed , z_speed , speed_accuracy , speed_3d , speed_2d , direction , altitude_agl) FROM program 'gunzip -c ee_tracking_speed_limited.csv'
+\copy gps.ee_acc_start_limited (device_info_serial, date_time, line_counter, timesynced, accii, accsn, f) FROM program 'gunzip -c ee_acc_start_limited.csv.gz'
+\copy gps.ee_acceleration_limited (device_info_serial, date_time, index, x_acceleration, y_acceleration, z_acceleration) FROM program 'gunzip -c ee_acceleration_limited.csv.gz'
+\copy gps.ee_nest_limited (nest_id, reference_name, latitude, longitude, the_geom, the_geom_webmercator, start_date_time, end_date_time, found_by_whom, remarks) FROM 'ee_nest_limited.csv'
+\copy gps.ee_nest_inhabitant_limited (reference_name, ring_number, device_info_serial, key_name, nest_id, individual_id, track_session_id) FROM 'ee_nest_inhabitant_limited.csv'

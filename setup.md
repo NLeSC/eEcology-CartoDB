@@ -103,6 +103,8 @@ Setup fully qualified hostname
 Allow mail to send from server, use `Internet site` as config option
 
     apt-get install postfix mailutils
+		perl -pi -e 's/smtpd_use_tls=yes/smtpd_use_tls=no/' /etc/postfix/main.cf
+		service postfix restart
 
 Mount the pg data disk
 
@@ -148,6 +150,10 @@ The cartodb repos/services are installed in /opt, instead of root so it is clean
 ## Windshaft
 
 In /opt/Windshaft-cartodb/config/environments copy production.js.example production.js and disable configs for cartodb.com
+
+Increase row limit so more dense tiles can be made
+
+   perl -pi -e 's/: 65535,/: 6553500,/' /opt/Windshaft-cartodb/config/environments/production.js
 
 Requires a cache dir
 
