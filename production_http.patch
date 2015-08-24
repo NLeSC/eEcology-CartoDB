@@ -1,0 +1,130 @@
+diff --git a/app/controllers/application_controller.rb b/app/controllers/application_controller.rb
+index 9faee5a..ab91c88 100644
+--- a/app/controllers/application_controller.rb
++++ b/app/controllers/application_controller.rb
+@@ -23,7 +23,7 @@ class ApplicationController < ActionController::Base
+   rescue_from RecordNotFound,   :with => :render_404
+
+   # this disables SSL requirement in non-production environments (add "|| Rails.env.development?" for local https)
+-  unless Rails.env.production? || Rails.env.staging?
++  unless Rails.env.staging?
+     def self.ssl_required(*splat)
+       false
+     end
+diff --git a/app/mailers/import_mailer.rb b/app/mailers/import_mailer.rb
+index 1670a24..aa53e43 100644
+--- a/app/mailers/import_mailer.rb
++++ b/app/mailers/import_mailer.rb
+@@ -1,5 +1,5 @@
+ class ImportMailer < ActionMailer::Base
+-  default from: "cartodb.com <support@cartodb.com>"
++  default from: "cartodb admin <s.verhoeven@esciencecenter.nl>"
+   layout 'mail'
+
+   def data_import_finished(user, imported_tables, total_tables, first_imported_table, first_table, errors)
+diff --git a/app/mailers/user_mailer.rb b/app/mailers/user_mailer.rb
+index 0c1513c..e7e6bd1 100644
+--- a/app/mailers/user_mailer.rb
++++ b/app/mailers/user_mailer.rb
+@@ -1,5 +1,5 @@
+ class UserMailer < ActionMailer::Base
+-  default from: "cartodb.com <support@cartodb.com>"
++  default from: "cartodb admin <s.verhoeven@esciencecenter.nl>"
+   layout 'mail'
+
+   def new_organization_user(user)
+diff --git a/config/environments/production.rb b/config/environments/production.rb
+index 10256ba..3ac75fa 100644
+--- a/config/environments/production.rb
++++ b/config/environments/production.rb
+@@ -21,7 +21,7 @@ CartoDB::Application.configure do
+   # just comment this out and Rails will serve the files
+
+   # See everything in the log (default is :info)
+-  config.log_level = :info
++  config.log_level = :debug
+
+   # Use a different logger for distributed setups
+   # config.logger = SyslogLogger.new
+diff --git a/config/initializers/carto_db.rb b/config/initializers/carto_db.rb
+index 30de649..8224de5 100644
+--- a/config/initializers/carto_db.rb
++++ b/config/initializers/carto_db.rb
+@@ -178,7 +178,7 @@ module CartoDB
+   end
+
+   def self.get_domain
+-    if Rails.env.production? || Rails.env.staging?
++    if Rails.env.staging?
+verhoes@cartodb:/opt/cartodb$ nano config/environments/production.rb
+verhoes@cartodb:/opt/cartodb$ sudo nano config/environments/production.rb
+[sudo] password for verhoes:
+verhoes@cartodb:/opt/cartodb$ git diff
+diff --git a/app/controllers/application_controller.rb b/app/controllers/application_controller.rb
+index 9faee5a..ab91c88 100644
+--- a/app/controllers/application_controller.rb
++++ b/app/controllers/application_controller.rb
+@@ -23,7 +23,7 @@ class ApplicationController < ActionController::Base
+   rescue_from RecordNotFound,   :with => :render_404
+
+   # this disables SSL requirement in non-production environments (add "|| Rails.env.development?" for local https)
+-  unless Rails.env.production? || Rails.env.staging?
++  unless Rails.env.staging?
+     def self.ssl_required(*splat)
+       false
+     end
+diff --git a/app/mailers/import_mailer.rb b/app/mailers/import_mailer.rb
+index 1670a24..aa53e43 100644
+--- a/app/mailers/import_mailer.rb
++++ b/app/mailers/import_mailer.rb
+@@ -1,5 +1,5 @@
+ class ImportMailer < ActionMailer::Base
+-  default from: "cartodb.com <support@cartodb.com>"
++  default from: "cartodb admin <s.verhoeven@esciencecenter.nl>"
+   layout 'mail'
+
+   def data_import_finished(user, imported_tables, total_tables, first_imported_table, first_table, errors)
+diff --git a/app/mailers/user_mailer.rb b/app/mailers/user_mailer.rb
+index 0c1513c..e7e6bd1 100644
+--- a/app/mailers/user_mailer.rb
++++ b/app/mailers/user_mailer.rb
+@@ -1,5 +1,5 @@
+ class UserMailer < ActionMailer::Base
+-  default from: "cartodb.com <support@cartodb.com>"
++  default from: "cartodb admin <s.verhoeven@esciencecenter.nl>"
+   layout 'mail'
+
+   def new_organization_user(user)
+diff --git a/config/initializers/carto_db.rb b/config/initializers/carto_db.rb
+index 30de649..8224de5 100644
+--- a/config/initializers/carto_db.rb
++++ b/config/initializers/carto_db.rb
+@@ -178,7 +178,7 @@ module CartoDB
+   end
+
+   def self.get_domain
+-    if Rails.env.production? || Rails.env.staging?
++    if Rails.env.staging?
+       `hostname -f`.strip
+     elsif Rails.env.development?
+       "vizzuality#{self.session_domain}"
+@@ -188,7 +188,7 @@ module CartoDB
+   end
+
+   def self.use_https?
+-    Rails.env.production? || Rails.env.staging?
++    Rails.env.staging?
+   end
+
+   def self.get_session_domain
+diff --git a/config/initializers/session_store.rb b/config/initializers/session_store.rb
+index 7f8f2d1..d7f4c06 100644
+--- a/config/initializers/session_store.rb
++++ b/config/initializers/session_store.rb
+@@ -1,3 +1,4 @@
+ CartoDB::Application.config.session_store :cookie_store, key: '_cartodb_session', secure_random: true,
+                                           domain: Cartodb.config[:session_domain], expire_after: 7.days,
+-                                          httponly: true, secure: !(Rails.env.development? || Rails.env.test?)
+\ No newline at end of file
++                                          httponly: true, secure: false
++# !(Rails.env.development? || Rails.env.test?)
