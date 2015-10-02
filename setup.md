@@ -1,6 +1,6 @@
 # Installation instructions for cartodb machine on SURFSara HPC cloud
 
-See https://github.com/sverhoeven/docker-cartodb for instructions how to create a docker container. We will use the same OS and very similar steps to install CartoDB on the vm at http://cartodb.e-ecology.cloudlet.sara.nl
+See https://github.com/sverhoeven/docker-cartodb for instructions how to create a docker container. We will use the same OS and very similar steps to install CartoDB on the vm at http://cartodb.e-ecology.vm.surfsara.nl
 
 Passwords for accounts are not here, they are kept in a seperate file.
 
@@ -97,7 +97,7 @@ Enable firewall as we only want ssh and http ports open
 Setup fully qualified hostname
 
     echo cartodb > /etc/hostname
-    perl -pi -e 's/cloudvm/cartodb.e-ecology.cloudlet.sara.nl cartodb/' /etc/hosts
+    perl -pi -e 's/cloudvm/cartodb.e-ecology.vm.surfsara.nl cartodb/' /etc/hosts
     hostname cartodb
 
 Allow mail to send from server, use `Internet site` as config option
@@ -216,7 +216,7 @@ Logs and uploads dir must be exist+ writeable
 
 Change domain from cartodb.localhost to server name
 
-    perl -pi -e 's/cartodb\.localhost/cartodb.e-ecology.cloudlet.sara.nl/g' config/database.yml config/app_config.yml
+    perl -pi -e 's/cartodb\.localhost/cartodb.e-ecology.vm.surfsara.nl/g' config/database.yml config/app_config.yml
 
 Use our own HERE app id/code
 
@@ -346,7 +346,7 @@ Setup config by disabling default and adding the one from docker
 
     rm /etc/nginx/sites-enabled/default
     cp /opt/docker-cartodb/config/cartodb.nginx.proxy.conf /etc/nginx/sites-enabled/cartodb
-    perl -pi -e 's/cartodb\.localhost/cartodb.e-ecology.cloudlet.sara.nl/g' /etc/nginx/sites-enabled/cartodb
+    perl -pi -e 's/cartodb\.localhost/cartodb.e-ecology.vm.surfsara.nl/g' /etc/nginx/sites-enabled/cartodb
     service nginx restart
 
 Instead of ssl force production to work with http instead of https by making some changes to the code
@@ -412,9 +412,9 @@ Instead of ssl force production to work with http instead of https by making som
 
 # Create organization members
 
-1. Goto http://cartodb.e-ecology.cloudlet.sara.nl
+1. Goto http://cartodb.e-ecology.vm.surfsara.nl
 2. Login with admin4ee and $ORG_OWNER_PW
-3. Goto http://cartodb.e-ecology.cloudlet.sara.nl/user/admin4ee/organization
+3. Goto http://cartodb.e-ecology.vm.surfsara.nl/user/admin4ee/organization
 4. Press `create new user` button
 
 # Export and import gps schema
