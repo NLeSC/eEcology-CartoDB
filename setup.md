@@ -184,6 +184,11 @@ Start it
 Logs dir must be writeable
 
     chown cartodb /opt/CartoDB-SQL-API/logs
+    
+Moved logs to /data by 
+
+   mv /opt/CartoDB-SQL-API/logs /data/
+   ln -s /data/logs /opt/CartoDB-SQL-API/logs
 
 SQL-API upstart script (/etc/init/cartodb-sql-api.conf):
 
