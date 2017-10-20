@@ -1,6 +1,8 @@
 # eEcology-CartoDB
 Documentation and script to setup a CartoDB server with eEcology tables
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.1033929.svg)](https://doi.org/10.5281/zenodo.1033929)
+
 Setup cartodb machine see [setup.md](setup.md)
 
 # Create tables
